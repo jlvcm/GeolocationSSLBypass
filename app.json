@@ -1,5 +1,5 @@
 {
-  "name": "webgpsbypass",
+  "name": "GeolocationSSLBypass",
   "description": "bypass google chrome GPS HTTPS restrictions.",
   "repository": "https://github.com/jlvcm/GeolocationSSLBypass",
   "keywords": ["ssl", "geolocation","bypass"],
