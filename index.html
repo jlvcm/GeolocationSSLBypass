@@ -1,0 +1,29 @@
+<script>
+function getLocation(callback,callbackerror) {
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(callback, callbackerror);
+    }else{
+    	window.opener.postMessage(null,"{{domain}}");
+    }
+}
+getLocation(function(gpsLoc){
+    var coords = gpsLoc['coords'],
+        Geoposition = {
+            'timestamp':gpsLoc['timestamp'],
+            'coords':    {
+                accuracy: coords["accuracy"],
+                altitude: coords["altitude"],
+                altitudeAccuracy: coords["altitudeAccuracy"],
+                heading: coords["heading"],
+                latitude: coords["latitude"],
+                longitude: coords["longitude"],
+                speed: coords["speed"]
+            }
+        };
+    window.opener.postMessage(Geoposition,"{{domain}}")
+},function(err){
+    console.error('ERROR(' + err.code + '): ' + err.message);
+    window.opener.postMessage(null,"{{domain}}");
+})
+
+</script>

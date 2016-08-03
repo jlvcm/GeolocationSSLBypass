@@ -1,0 +1,34 @@
+<html>
+<head></head>
+<body></body>
+<script>
+// HTTPS Server Domain
+var GpsServerUrl = "https://geolocationsslbypass.herokuapp.com"; 
+
+        var gpsReq = function(){
+            var pop = undefined;
+            callback = function(data){
+                // GET GPS DATA
+                if(data){
+                    console.log(data);
+                    document.body.innerHTML = data['coords']['latitude']+', '+data['coords']['longitude']
+                }else{
+                    // FAILED TO GET GPS DATA
+                    console.warn('GPS Location not found');
+                }
+                pop.close();
+            }
+            receiveGPS = function(event){
+                window.removeEventListener('message',receiveGPS,false);
+                var origin = event.origin || event.originalEvent.origin;
+                if (origin !== GpsServerUrl)
+                  return;
+                callback(event.data);
+            };
+            window.addEventListener("message", receiveGPS, false);
+            pop = window.open(GpsServerUrl, "", 'scrollbars=no, width=500, height=300, top=1, left=1');
+        };
+
+</script>
+<button onclick="gpsReq()">check GPS</button>
+</html>
